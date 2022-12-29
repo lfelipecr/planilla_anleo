@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+
+		<record id="om_hr_payroll_view_hr_payslip_tree_iherit_planilla" model="ir.ui.view">
+			<field name="name">om_hr_payroll_view_hr_payslip_tree_iherit_planilla</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_tree"/>
+			<field name="arch" type="xml">
+				
+				<xpath expr="//field[@name='company_id']" position="after">
+					<field name="total_neto"/>
+					<field name="total_viaticos"/>
+					<field name="total_pagar"/>
+				</xpath>
+				
+			</field>
+		</record>
+
+
+		<record id="om_hr_payroll_view_hr_payslip_form_iherit_planilla" model="ir.ui.view">
+			<field name="name">om_hr_payroll_view_hr_payslip_form_iherit_planilla</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//header" position="inside">
+					<button name="get_boletas" string="Obtener boletas" states="draft" type="object"/>
+				</xpath>
+
+				<xpath expr="//group[1]" position="before">
+					<group>
+						<group>
+							<field name="codigo"/>
+							<field name="semana_pagar"/>
+							<field name="fecha_pago"/>
+						</group>
+					</group>
+				</xpath>
+
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="saldo_prestamo"/>
+				</xpath>
+
+				<xpath expr="//notebook/page[1]" position="before">
+					<page string="Viaticos">
+						<group col="4">
+							<group>
+								<field name="cant_viajes" readonly="1"/>
+							</group>
+							<group>
+								<div><field name="costo_viajes" readonly="1" force_save="1"/></div>
+							</group>
+						</group>
+						
+						<group col="4">
+							<group>
+								<field name="cant_locos"/>
+							</group>
+							<group>
+								<div><field name="costo_locos" readonly="1" force_save="1"/></div>
+							</group>
+						</group>
+						
+						<group col="4">
+							<group>
+								<field name="cant_noches"/>
+							</group>
+							<group>
+								<div><field name="costo_noches" readonly="1" force_save="1"/></div>
+							</group>
+						</group>
+						
+						<group col="4">
+							<group>
+								<field name="cant_feriados"/>
+							</group>
+							<group>
+								<div><field name="costo_feriados" readonly="1" force_save="1"/></div>
+							</group>
+						</group>						
+						
+						<group col="4">
+							<group>
+								<field name="otros_viajes"/>
+							</group>
+						</group>
+						
+						<group col="4">
+							<group>
+							</group>
+						</group>
+
+						<group>
+							<group>
+								<field name="carga"/>
+								<field name="bonific"/>
+								<field name="reintegros"/>
+							</group>
+						</group>						
+					</page>
+					
+					<page string="Deducciones">
+						<group>
+							<group>
+								<field name="deduc_obrera"/>
+								<field name="prestamo"/>
+								<field name="ahorro"/>
+								<field name="otras_deduc"/>
+								<field name="adelantos"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+
+			</field>
+		</record>
+
+
+	</data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+viaticos_admin,viaticos_admin,model_viaticos,planilla_anleo.admin_planilla,1,1,1,1
+viaticos_user,viaticos_user,model_viaticos,base.group_user,1,0,0,0
+boleta_user,boleta_user,model_boleta,base.group_user,1,1,1,1
+boleta_ruta,boleta_ruta,model_boleta_ruta,,1,1,1,1

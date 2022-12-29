@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<menuitem id="menu_planilla" name="Planilla" parent="om_hr_payroll.menu_hr_payroll_root" sequence="17"/>
+
+
+
+
+	
+		
+		<record id="viaticos_form" model="ir.ui.view">
+			<field name="name">viaticos_form</field>
+			<field name="model">viaticos</field>
+			<field name="arch" type="xml">
+				<form create="false">
+					<sheet>
+						<group>
+							<group>
+								<field name="feriados"/>
+								<field name="noches"/>
+								<field name="locos"/>
+							</group>
+							<group></group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_viaticos">
+			<field name="name">Viáticos</field>
+			<field name="res_model">viaticos</field>
+			<field name="view_mode">form</field>
+			<field name="res_id">1</field>
+		</record>
+ 
+		<menuitem id="menu_viaticos" name="Viáticos" parent="menu_planilla" action="action_viaticos" sequence="21"/>
+		
+
+
+
+
+	</data>
+</odoo>

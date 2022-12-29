@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record model="ir.module.category" id="planilla_categ">
+			<field name="name">Planilla</field>
+			<field name="description">Parametros de Planilla</field>
+			<field name="sequence">120</field>
+		</record>
+
+
+        <record id="admin_planilla" model="res.groups">
+            <field name="name">Adminsitrador</field>
+			<field name="category_id" ref="planilla_categ"/>
+        </record>
+
+
+    </data>
+</odoo>
