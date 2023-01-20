@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<!-- custom pager format -->
+		<record id="paperformat_planilla_report" model="report.paperformat">
+			<field name="name">Custom Paperformat for the reporte planilla</field>
+			<field name="default" eval="False"/>
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<!-- this one is to make the pdf to become horizontal, if landscape=False, pdf will become vertical -->
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">10</field>
+			<field name="margin_bottom">10</field>
+			<field name="margin_left">10</field>
+			<field name="margin_right">10</field>
+			<field name="dpi">96</field>
+		</record>
+	
+		<record id="action_planilla_reporte" model="ir.actions.report">
+			<field name="name">Reporte</field>
+			<field name="model">hr_payslip_report</field>
+			<field name="report_type">qweb-pdf</field>
+			<field name="report_name">planilla_anleo.reporte_planilla</field>
+			<field name="report_file">planilla_anleo.reporte_planilla</field>
+			<field name="binding_model_id" ref="model_hr_payslip_report"/>
+			<field name="binding_type">report</field>
+			<field name="paperformat_id" ref="paperformat_planilla_report"/>
+		</record>
+
+
+
+		<template id="reporte_planilla">
+			<t t-call="web.html_container">
+
+				<t t-foreach="docs" t-as="o">
+					<t t-call="planilla_anleo.reporte_planilla_document"/>
+				</t>
+			</t>
+		</template>
+
+		<template id="reporte_planilla_document">
+			<t t-call="web.external_layout">
+				<div class="page">
+					
+					<div class="row mt32 mb32">
+						<div class="col-auto text-center">
+							<h1>
+								Planilla semanal
+							</h1>
+						</div>
+					</div>
+					
+					<div class="row mt32 mb32">
+						<div class="col-12">
+							<span t-esc="o.company.name"/>
+						</div>
+						<div class="col-12">
+							<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d de %m de %Y')"/>
+						</div>
+					</div>
+					
+					<table class="table table-sm" name="table_planilla">
+						<thead>
+							<tr>
+								<th style="border: 1px solid" name="reporte"><strong>Reporte de transferencias</strong></th>
+								<th style="border: 1px solid" name=""></th>
+								<th style="border: 1px solid" name=""></th>
+								<th style="border: 1px solid" name="planilla" colspan="5"><strong>Planilla semanal</strong></th>
+								<th style="border: 1px solid" name="periodo" colspan="3"><strong>Periodo de gastos de viaje</strong></th>
+							</tr>
+						</thead>
+						
+						<t t-set="salario" t-value="0"/>
+						<t t-set="prestamos" t-value="0"/>
+						<t t-set="ahorro" t-value="0"/>
+						<t t-set="bonif" t-value="0"/>
+						<t t-set="depositado" t-value="0"/>
+						<tbody>
+							<t t-set="lines" t-value="o.planillas"/>
+							<tr>
+								<td style="border: 1px solid">Nombre</td>
+								<td style="border: 1px solid">Cedula</td>
+								<td style="border: 1px solid">Oficio</td>
+								<td style="border: 1px solid">Salario Semanal</td>
+								<td style="border: 1px solid">Prestamos</td>
+								<td style="border: 1px solid">Ahorro</td>
+								<td style="border: 1px solid">Bonificaciones o feriados</td>
+								<td style="border: 1px solid">Monto depositado</td>
+								<td style="border: 1px solid">Del</td>
+								<td style="border: 1px solid">Hasta</td>
+							</tr>
+							<t t-foreach="lines" t-as="planilla">
+								<tr>
+								<td style="border: 1px solid"><span t-field="planilla.name"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.cedula"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.oficio"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.salario"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.prestamos"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.ahorro"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.bonif"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.depositado"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.date_del"/></td>
+								<td style="border: 1px solid"><span t-field="planilla.date_hasta"/></td>
+								</tr>
+								<t t-set="salario" t-value="salario + planilla.salario"/>
+								<t t-set="prestamos" t-value="prestamos + planilla.prestamos"/>
+								<t t-set="ahorro" t-value="ahorro + planilla.ahorro"/>
+								<t t-set="bonif" t-value="bonif + planilla.bonif"/>
+								<t t-set="depositado" t-value="depositado + planilla.depositado"/>
+							</t>
+							<tr>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"><span t-esc="salario"/></td>
+								<td style="border: 1px solid"><span t-esc="prestamos"/></td>
+								<td style="border: 1px solid"><span t-esc="ahorro"/></td>
+								<td style="border: 1px solid"><span t-esc="bonif"/></td>
+								<td style="border: 1px solid"><span t-esc="depositado"/></td>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					
+					
+					
+					
+					<p style="page-break-after:always;">   </p>
+					
+					
+					
+					
+					
+					<div class="row mt32 mb32">
+						<div class="col-auto text-center">
+							<h1>
+								Planilla semanal de Gastos
+							</h1>
+						</div>
+					</div>
+					
+					<div class="row mt32 mb32">
+						<div class="col-12">
+							<span t-esc="o.company.name"/>
+						</div>
+						<div class="col-12">
+							<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d de %m de %Y')"/>
+						</div>
+					</div>
+					
+					<table class="table table-sm" name="table_gasto">
+						<thead>
+							<tr>
+								<th style="border: 1px solid" name="reporte"><strong>Reporte de transferencias</strong></th>
+								<th style="border: 1px solid" name=""></th>
+								<th style="border: 1px solid" name="planilla" colspan="3"><strong>Gastos</strong></th>
+								<th style="border: 1px solid" name="periodo" colspan="3"><strong>Rebajas</strong></th>
+								<th style="border: 1px solid" name="periodo" colspan="2"><strong>Periodo de gastos de viaje</strong></th>
+							</tr>
+						</thead>
+						
+						<t t-set="peajes" t-value="0"/>
+						<t t-set="noches" t-value="0"/>
+						<t t-set="por_viaje" t-value="0"/>
+						<t t-set="adelanto" t-value="0"/>
+						<t t-set="calzado" t-value="0"/>
+						<t t-set="depositado" t-value="0"/>
+						<tbody>
+							<t t-set="lines" t-value="o.gastos"/>
+							<tr>
+								<td style="border: 1px solid">Nombre</td>
+								<td style="border: 1px solid">Oficio</td>
+								<td style="border: 1px solid">Peajes/Facturas</td>
+								<td style="border: 1px solid">Noches</td>
+								<td style="border: 1px solid">Por viaje realizado</td>
+								<td style="border: 1px solid">Adelanto/Otros</td>
+								<td style="border: 1px solid">Calzado</td>
+								<td style="border: 1px solid">Monto depositado</td>
+								<td style="border: 1px solid">Del</td>
+								<td style="border: 1px solid">Hasta</td>
+							</tr>
+							<t t-foreach="lines" t-as="gasto">
+								<tr>
+								<td style="border: 1px solid"><span t-field="gasto.name"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.oficio"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.peajes"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.noches"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.por_viaje"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.adelanto"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.calzado"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.depositado"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.fecha_del"/></td>
+								<td style="border: 1px solid"><span t-field="gasto.fecha_al"/></td>
+								</tr>
+								<t t-set="peajes" t-value="peajes + gasto.peajes"/>
+								<t t-set="noches" t-value="noches + gasto.noches"/>
+								<t t-set="por_viaje" t-value="por_viaje + gasto.por_viaje"/>
+								<t t-set="adelanto" t-value="adelanto + gasto.adelanto"/>
+								<t t-set="calzado" t-value="calzado + gasto.calzado"/>
+								<t t-set="depositado" t-value="depositado + gasto.depositado"/>
+							</t>
+							<tr>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"><span t-esc="peajes"/></td>
+								<td style="border: 1px solid"><span t-esc="noches"/></td>
+								<td style="border: 1px solid"><span t-esc="por_viaje"/></td>
+								<td style="border: 1px solid"><span t-esc="adelanto"/></td>
+								<td style="border: 1px solid"><span t-esc="calzado"/></td>
+								<td style="border: 1px solid"><span t-esc="depositado"/></td>
+								<td style="border: 1px solid"></td>
+								<td style="border: 1px solid"></td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</t>
+		</template>
+    </data>
+</odoo>

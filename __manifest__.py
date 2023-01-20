@@ -24,6 +24,7 @@
         'view/planilla.xml',
         'view/boleta.xml',
         'view/transportes.xml',
+        'report/reporte_planilla.xml',
     ],
     'css': [],
     'test': [],

@@ -118,5 +118,77 @@
 		</record>
 
 
+
+
+
+
+
+
+
+
+
+		<record id="hr_payslip_report_form" model="ir.ui.view">
+			<field name="name">hr_payslip_report_form</field>
+			<field name="model">hr_payslip_report</field>
+			<field name="arch" type="xml">
+				<form create="false">
+					<header>
+						<button name="obtener_planilla" string="Obtener planilla semanal" type="object"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="date_from"/>
+								<field name="date_to"/>
+							</group>
+						</group>
+						
+						<notebook>
+							<page string="Planillas">
+								<field name="planillas" readonly="1">
+									<tree string="">
+										<field name="name"/>
+										<field name="cedula"/>
+										<field name="oficio"/>
+										<field name="salario"/>
+										<field name="prestamos"/>
+										<field name="ahorro"/>
+										<field name="bonif"/>
+										<field name="depositado"/>
+										<field name="date_del"/>
+										<field name="date_hasta"/>
+									</tree>
+								</field>
+							</page>
+							<page string="Gastos">
+								<field name="gastos" readonly="1">
+									<tree>
+										<field name="name"/>
+										<field name="oficio"/>
+										<field name="peajes"/>
+										<field name="noches"/>
+										<field name="por_viaje"/>
+										<field name="adelanto"/>
+										<field name="calzado"/>
+										<field name="depositado"/>
+										<field name="fecha_del"/>
+										<field name="fecha_al"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>	
+		<record model="ir.actions.act_window" id="report_planilla_act">
+			<field name="name">Reporte semanal</field>
+			<field name="res_model">hr_payslip_report</field>
+			<field name="view_mode">form</field>
+			<field name="res_id">1</field>
+		</record>
+		<menuitem id="menu_reporte_planilla" name="Reporte planilla" parent="om_hr_payroll.menu_hr_payroll_root" action="report_planilla_act" sequence="11"/>
+
+
 	</data>
 </odoo>

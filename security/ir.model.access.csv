@@ -3,3 +3,6 @@ viaticos_admin,viaticos_admin,model_viaticos,planilla_anleo.admin_planilla,1,1,1
 viaticos_user,viaticos_user,model_viaticos,base.group_user,1,0,0,0
 boleta_user,boleta_user,model_boleta,base.group_user,1,1,1,1
 boleta_ruta,boleta_ruta,model_boleta_ruta,,1,1,1,1
+hr_payslip_report,hr_payslip_report,model_hr_payslip_report,,1,1,1,1
+hr_payslip_report_line,hr_payslip_report_line,model_hr_payslip_report_line,,1,1,1,1
+hr_payslip_report_gasto,hr_payslip_report_gasto,model_hr_payslip_report_gasto,,1,1,1,1
