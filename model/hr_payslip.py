@@ -104,17 +104,18 @@ class hr_payslip_report(models.Model):
             salario = 0
             total = 0
             for line in planilla.line_ids:
-                if line.code == "BASIC":
+                if line.code == "NET CHOFER":
                     salario = line.total
-                if line.code == "TOTAL":
-                    total = line.total
+                #if line.code == "TOTAL":
+                #    total = line.total
+            depositado = salario - planilla.prestamo - planilla.ahorro
             self.env['hr_payslip_report_line'].create({
                 'name': planilla.employee_id.id,
                 'salario': salario,
                 'prestamos': planilla.prestamo,
                 'ahorro': planilla.ahorro,
                 'bonif': planilla.bonific,
-                'depositado': total,
+                'depositado': depositado,
                 'date_del': planilla.date_from,
                 'date_hasta': planilla.date_to,
                 'report': self.id,
