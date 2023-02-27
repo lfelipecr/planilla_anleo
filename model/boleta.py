@@ -6,6 +6,7 @@ from datetime import datetime
 
 class boleta(models.Model):
     _name = "boleta"
+    _inherit = ['mail.thread']
     _description = "Boleta"
 
     @api.onchange("ruta")
@@ -33,16 +34,16 @@ class boleta(models.Model):
 
         return rec
 
-    name = fields.Char("Consecutivo")
-    date = fields.Date("Fecha Entrada", default=datetime.today())
-    placa = fields.Many2one("fleet.vehicle", string="Placa")
-    cuenta_analitica = fields.Many2one("account.analytic.account", string="Cuenta A.")
-    chofer = fields.Many2one("hr.employee", string="Chofer")
-    ayudante1 = fields.Many2one("hr.employee", string="Ayudante 1")
-    ayudante2 = fields.Many2one("hr.employee", string="Ayudante 2")
-    num_boleta = fields.Char("Num. Boleta")
-    cliente = fields.Many2one("res.partner", string="Cliente")
-    ruta = fields.Many2one("boleta_ruta", string="Ruta")
+    name = fields.Char("Consecutivo", tracking=True)
+    date = fields.Date("Fecha Entrada", default=datetime.today(), tracking=True)
+    placa = fields.Many2one("fleet.vehicle", string="Placa", tracking=True)
+    cuenta_analitica = fields.Many2one("account.analytic.account", string="Cuenta A.", tracking=True)
+    chofer = fields.Many2one("hr.employee", string="Chofer", tracking=True)
+    ayudante1 = fields.Many2one("hr.employee", string="Ayudante 1", tracking=True)
+    ayudante2 = fields.Many2one("hr.employee", string="Ayudante 2", tracking=True)
+    num_boleta = fields.Char("Num. Boleta", tracking=True)
+    cliente = fields.Many2one("res.partner", string="Cliente", tracking=True)
+    ruta = fields.Many2one("boleta_ruta", string="Ruta", tracking=True)
     costo_viaje = fields.Float("Costo viaje")
     costo_viaticos = fields.Float("Costo viáticos")
 

@@ -133,7 +133,9 @@
 			<field name="arch" type="xml">
 				<form create="false">
 					<header>
-						<button name="obtener_planilla" string="Obtener planilla semanal" type="object"/>
+						<button name="obtener_planilla" string="Obtener planilla semanal" type="object" class="btn-primary"/>
+						<button name="planilla_to_excel" string="Exportar planilla" type="object"/>
+						<button name="gastos_to_excel" string="Exportar gastos" type="object"/>						
 					</header>
 					<sheet>
 						<group>
@@ -189,6 +191,45 @@
 		</record>
 		<menuitem id="menu_reporte_planilla" name="Reporte planilla" parent="om_hr_payroll.menu_hr_payroll_root" action="report_planilla_act" sequence="11"/>
 
+
+
+		<record id="hr_payslip_report_line_tree" model="ir.ui.view">
+			<field name="name">hr_payslip_report_line_tree</field>
+			<field name="model">hr_payslip_report_line</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="cedula"/>
+					<field name="oficio"/>
+					<field name="salario"/>
+					<field name="prestamos"/>
+					<field name="ahorro"/>
+					<field name="bonif"/>
+					<field name="depositado"/>
+					<field name="date_del"/>
+					<field name="date_hasta"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="hr_payslip_report_gasto_tree" model="ir.ui.view">
+			<field name="name">hr_payslip_report_gasto_tree</field>
+			<field name="model">hr_payslip_report_gasto</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="oficio"/>
+					<field name="peajes"/>
+					<field name="noches"/>
+					<field name="por_viaje"/>
+					<field name="adelanto"/>
+					<field name="calzado"/>
+					<field name="depositado"/>
+					<field name="fecha_del"/>
+					<field name="fecha_al"/>
+				</tree>
+			</field>
+		</record>
 
 	</data>
 </odoo>
