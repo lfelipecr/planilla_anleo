@@ -77,7 +77,7 @@ class hr_payslip_inherit_planilla(models.Model):
 
     carga = fields.Float("Carga/Descarga")
     bonific = fields.Float("Bonific.")
-    reintegros = fields.Float("Reintegros")
+    reintegros = fields.Float("Facturas")
 
     #deducciones
     deduc_obrera = fields.Float("Deduc. Obrera")
@@ -111,7 +111,7 @@ class hr_payslip_report(models.Model):
             depositado = salario - planilla.prestamo - planilla.ahorro
             self.env['hr_payslip_report_line'].create({
                 'name': planilla.employee_id.id,
-                'salario': salario,
+                'salario': planilla.contract_id.wage,
                 'prestamos': planilla.prestamo,
                 'ahorro': planilla.ahorro,
                 'bonif': planilla.bonific,
@@ -126,12 +126,12 @@ class hr_payslip_report(models.Model):
         for gasto in gastos:
             self.env['hr_payslip_report_gasto'].create({
                 'name': gasto.employee_id.id,
-                'peajes': 0,
+                'peajes': gasto.reintegros,
                 'noches': gasto.costo_noches,
-                'por_viaje': 0,
+                'por_viaje': gasto.costo_viajes,
                 'adelanto': gasto.adelantos,
                 'calzado': gasto.otras_deduc,
-                'depositado': (0 + gasto.costo_noches + 0) - gasto.adelantos - gasto.otras_deduc,
+                'depositado': (gasto.reintegros + gasto.costo_noches + gasto.costo_viajes) - gasto.adelantos - gasto.otras_deduc,
                 'fecha_del': gasto.date_from,
                 'fecha_al': gasto.date_to,
                 'report': self.id,
