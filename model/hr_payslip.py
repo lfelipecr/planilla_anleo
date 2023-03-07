@@ -104,7 +104,7 @@ class hr_payslip_report(models.Model):
             salario = 0
             total = 0
             for line in planilla.line_ids:
-                if line.code == "NET CHOFER":
+                if line.code == "NET":
                     salario = line.total
                 #if line.code == "TOTAL":
                 #    total = line.total
@@ -190,7 +190,7 @@ class hr_payslip_report_gasto(models.Model):
     noches = fields.Integer("Noches")
     por_viaje = fields.Float("Por viaje")
     adelanto = fields.Float("Adelanto")
-    calzado = fields.Float("Calzado")
+    calzado = fields.Float("Otras Deduc.")
     depositado = fields.Float("Depositado")
     fecha_del = fields.Date("Del")
     fecha_al = fields.Date("Al")
